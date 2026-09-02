@@ -46,7 +46,7 @@
 - [x] `grep -rn "review-checklist" skill README.md README_zh.md` → 无残留引用。
 - [x] 用本 skill 的审查路径自审本次改动后的 skill 目录，P0 数为 0。
 - [x] `unzip -l dist/skill-principle-v0.8.0.skill` → 含 SKILL.md 与 6 份 references。
-- [ ] 合并后：`gh repo view` 显示新名，`git remote -v` 指向新地址，`ls -l ~/.claude/skills/skill-principle` 链接有效。
+- [x] 合并后：`gh repo view` 显示新名，`git remote -v` 指向新地址，`ls -l ~/.claude/skills/skill-principle` 链接有效。
 - [x] 忠实自查：逐条对照验收标准与「不做什么」，未擅自新增脚手架生成能力，未删减既有审查标准。
 
 ## 回滚方式
