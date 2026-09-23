@@ -18,9 +18,10 @@ A best-practice principle library for Agent Skills, with two ways to use it: **b
 - **Graded report**: every issue is pinned to a location (file:line) + problem + suggested fix, plus a list of passed items, N/A items, and an optional 8-dimension maturity scorecard
 - **User-adjudication gate**: ambiguous findings (orphaned docs, suspected intentional deviations, requests to add hard "never do X" rules, narrowing counter-examples) are queued and presented to the user together at the end, instead of interrupting item by item
 - **Large-skill splitting**: for skills with more than 20 files, review work is fanned out to parallel sub-agents by branch, while global principles (cross-file conflicts, orphaned docs, version management, structural consistency, progressive disclosure, deployment cohesion, cross-platform install) stay in the main session
-- **Two optional deep modes** (off by default, offered after the review or self-review):
+- **Three optional deep modes** (off by default, offered after the review or self-review; model tailoring can also be requested directly):
   - **Enhanced review**: cross-checks against current domain practice online, flagging staleness / inconsistency / gaps / over-restriction
   - **Behavioral testing**: trigger-rate sampling on positive/negative cases, RED/GREEN/REFACTOR behavioral stress tests, meta feedback
+  - **Model tailoring**: the target model itself trims the skill down to the delta between its own default behavior and what the author requires (external facts are always kept verbatim); an examiner model (a stronger model the user picks, or the target model itself) then writes an exam, and the target model's sub-agents sit it blind in three groups (original / tailored / optional no-skill baseline), and lost points drive restoration until the pass line is met. The original is never modified, and the variant is valid only for that model
 
 ## Install
 
@@ -63,14 +64,15 @@ skill-principle/
 │       ├── principles.md           # 27 principles (principle / building / review)
 │       ├── report-template.md      # graded report template + scorecard
 │       ├── enhanced-review.md      # enhanced review mode
-│       └── behavior-testing.md     # behavioral testing mode
+│       ├── behavior-testing.md     # behavioral testing mode
+│       └── model-tailoring.md      # model tailoring mode
 ├── dist/                           # packaged build artifacts (.skill)
 └── README.md
 ```
 
 ## Version
 
-Versioning is managed via git tags; current version is `v0.9.0`.
+Versioning is managed via git tags; current version is `v0.10.0`.
 
 - `v0.1.0` — Initial release: three-layer checklist, split review, adjudication gate, enhanced review
 - `v0.2.0` — Ran a full self-review of the skill on itself (including a real sub-agent split run), fixed 3 P1 issues around split-responsibility alignment; added mechanical-layer checks; rewrote wording to be tool-neutral
@@ -80,6 +82,7 @@ Versioning is managed via git tags; current version is `v0.9.0`.
 - `v0.6.0` — Attention engineering: added 2.17 progressive disclosure & attention control (layering, scenario splitting, task decomposition, step-by-step execution, per-step cognitive-load thresholds, disclosure-timing mismatch, context offloading); the scorecard's "reference design" dimension is now "reference design & progressive disclosure"
 - `v0.7.0` — Cross-platform installation: added 3.6 requiring supported-platform coverage, deterministic installation locations, and preference for dedicated dependency directories inside the skill root
 - `v0.9.0` — Single-home facts: added 2.18 (each fact has exactly one home; elsewhere write name + pointer — checks for multi-home duplication, out-of-scope expansion, missing pointers, dangling pointers, and a missing ownership/routing table); build path Step B3 now decides fact ownership and the routing table; the skill was also refactored against 2.18 — the two annotation lists and the "core stance" each now live in exactly one place, and SKILL.md gained an ownership table
+- `v0.10.0` — Model tailoring: added a third deep mode that trims a skill for one specified model (external facts are always kept), measures the loss with a blind three-group exam (original / tailored / no skill), and restores cut content from the lost points
 - `v0.8.0` — Renamed `skill-reviewer` → `skill-principle` and extended from reviewing to building: the review checklist was reworked into a principle library written as principle / building / review (`references/principles.md`); SKILL.md gained path routing and a building path (Steps B1–B5, ending in a mandatory self-review); the review flow is unchanged (Steps R1–R5)
 
 ## Design references

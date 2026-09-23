@@ -185,6 +185,7 @@
 - SKILL.md 是否超过 500 行（应拆分到 references）
 - 分级 token 阈值：单个 reference >10k tokens 警告、>25k 报问题；references 总量 >25k 警告、>50k 报问题（超标 → 拆分或提供 grep 检索模式）；超过 100 行的 reference 是否在开头提供目录（TOC）
 - 范围聚焦度：同一 skill 的代码块混用多种语言、或试图覆盖过多不相干接口/场景，是应拆分为多个 skill 的信号
+- 需要针对某个模型系统性剪裁、并实测剪裁损失时 → 见 `references/model-tailoring.md`（经 SKILL.md Step R5 启用）
 
 动作：指出可精简的段落，给出建议措辞或拆分方案。
 
