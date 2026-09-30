@@ -3,3 +3,4 @@
 .omc/
 .agents/
 .DS_Store
+.worktrees/

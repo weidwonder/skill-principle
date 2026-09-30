@@ -61,7 +61,7 @@
 
 **原则**：frontmatter 是运行时读取的机器契约，字段与取值必须严格合规。
 
-**建设**：只写 `name`、`description` 两个必需字段，按需加 `license`、`allowed-tools`、`metadata`、`compatibility`，其他一律不加；`name` 用小写字母/数字/连字符，与 skill 目录名保持一致；`description` 用第三人称陈述，控制在 1024 字符内、不含尖括号。
+**建设**：只写 `name`、`description` 两个必需字段，按需加 `license`、`allowed-tools`、`metadata`、`compatibility`，其他一律不加（会迭代的 skill 在 `metadata` 下写 `version`，见 2.4）；`name` 用小写字母/数字/连字符，与 skill 目录名保持一致；`description` 用第三人称陈述，控制在 1024 字符内、不含尖括号。
 
 **审查**：
 
@@ -160,16 +160,27 @@
 
 ### 2.4 [P1] 版本管理与资产迁移 —— 主会话执行
 
-**原则**：会迭代的 skill 需要版本管理；版本号写在 git tag 里，不写进正文——除非用户资产需要对齐版本。
+**原则**：会迭代的 skill 需要版本管理；每个版本同时标在 git tag 与 SKILL.md frontmatter 的 `metadata.version` 上，两处一致。正文不写版本号与更新日志——除非用户资产需要对齐版本。
 
-**建设**：skill 建在 git 仓库内，版本以 git tag 标记。只有当 skill 的更新会影响用户按旧版生成的本地资产（配置、数据文件、模板、目录结构）时，才在 SKILL.md 内标注当前版本并写明版本差异检测与迁移引导；否则正文里不留版本号、更新日志这类 time-sensitive 信息。
+**建设**：skill 建在 git 仓库内。每次发版同时做两件事：打 git tag，并把 `metadata.version` 改成同一个版本号（tag 去掉前缀 `v`，加引号保持为字符串）。安装副本通常不带 `.git`，Agent 与随 skill 分发的脚本只能从 `metadata.version` 得知当前版本。
+
+例：git tag 为 `v1.2.0` 时写
+
+```yaml
+metadata:
+  version: "1.2.0"
+```
+
+只有当 skill 的更新会影响用户按旧版生成的本地资产（配置、数据文件、模板、目录结构）时，才在正文里写版本差异检测与迁移引导，当前版本引用 `metadata.version`，不在正文另写一份；否则正文里不留版本号、更新日志这类 time-sensitive 信息。
 
 **审查**：
 
-- skill 目录是否为 git 仓库（或位于 git 仓库内）？会迭代的 skill 需要版本管理，版本以 **git tag** 标记。
-- 若 skill 的更新可能影响**用户资产**，是否有机制提示 Agent 检测版本差异并引导用户做资产迁移/更新，以对齐 skill 版本？**仅在这种场景下**，才需要在 SKILL.md 内标注当前版本供 Agent 对齐；否则避免在 SKILL.md 写版本号等 time-sensitive 信息。
+- skill 目录是否为 git 仓库（或位于 git 仓库内）？版本是否以 **git tag** 标记？
+- frontmatter 是否有 `metadata.version`？它是否等于最近一个版本 tag 去掉 `v` 后的值（正在发版、tag 尚未打出时，等于即将打的 tag）？skill 根目录不在仓库顶层时，看所在仓库的 tag。
+- 若 skill 的更新可能影响**用户资产**，是否有机制提示 Agent 检测版本差异并引导用户做资产迁移/更新？迁移引导是否引用 `metadata.version`，而不是在正文另写版本号？
+- 正文是否另外维护了版本号或更新日志？
 
-动作：无 git → 建议 `git init` 并打 tag；有资产影响但无迁移机制 → 报 P1 并给出迁移提示的建议写法；无资产影响却在 SKILL.md 内维护版本号/更新日志 → 建议移除、只留 git tag。
+动作：无 git → 建议 `git init` 并打 tag；缺 `metadata.version`，或与 tag 不一致 → 报 P1，写明应填的值；有资产影响但无迁移机制 → 报 P1 并给出迁移提示的建议写法；正文另维护版本号/更新日志 → 建议移除，版本只留在 git tag 与 `metadata.version`。
 
 ### 2.5 [P1] 表述精简
 

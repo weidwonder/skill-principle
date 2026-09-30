@@ -72,7 +72,7 @@ skill-principle/
 
 ## Version
 
-Versioning is managed via git tags; current version is `v0.10.0`.
+Each version is marked by a git tag and by `metadata.version` in the SKILL.md frontmatter; current version is `v0.11.0`.
 
 - `v0.1.0` — Initial release: three-layer checklist, split review, adjudication gate, enhanced review
 - `v0.2.0` — Ran a full self-review of the skill on itself (including a real sub-agent split run), fixed 3 P1 issues around split-responsibility alignment; added mechanical-layer checks; rewrote wording to be tool-neutral
@@ -83,6 +83,7 @@ Versioning is managed via git tags; current version is `v0.10.0`.
 - `v0.7.0` — Cross-platform installation: added 3.6 requiring supported-platform coverage, deterministic installation locations, and preference for dedicated dependency directories inside the skill root
 - `v0.9.0` — Single-home facts: added 2.18 (each fact has exactly one home; elsewhere write name + pointer — checks for multi-home duplication, out-of-scope expansion, missing pointers, dangling pointers, and a missing ownership/routing table); build path Step B3 now decides fact ownership and the routing table; the skill was also refactored against 2.18 — the two annotation lists and the "core stance" each now live in exactly one place, and SKILL.md gained an ownership table
 - `v0.10.0` — Model tailoring: added a third deep mode that trims a skill for one specified model (external facts are always kept), measures the loss with a blind three-group exam (original / tailored / no skill), and restores cut content from the lost points
+- `v0.11.0` — Version in frontmatter: 2.4 now requires every release to update both the git tag and `metadata.version` (installed copies usually have no `.git`, so agents and bundled scripts read the version from there); review reports a missing or mismatched `metadata.version` as P1; this skill carries its own `metadata.version`
 - `v0.8.0` — Renamed `skill-reviewer` → `skill-principle` and extended from reviewing to building: the review checklist was reworked into a principle library written as principle / building / review (`references/principles.md`); SKILL.md gained path routing and a building path (Steps B1–B5, ending in a mandatory self-review); the review flow is unchanged (Steps R1–R5)
 
 ## Design references

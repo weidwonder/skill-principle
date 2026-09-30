@@ -1,13 +1,15 @@
 ---
 name: skill-principle
 description: Agent Skill 的最佳实践原则库，覆盖建设与审查两条路径。建设时按原则指导写新 skill 或迭代已有 skill：确认意图与非目标、写触发得动的 description、设计渐进披露结构、补案例与异常场景，收尾强制自审。审查时以「使用该 skill 的 Agent」视角输出分级（P0/P1/P2）反馈报告，检查 frontmatter 合规、description 触发质量、安全隐患、工程信息泄露、流程与工具完备性、前后文冲突、结构一致性、隐式逻辑遗漏、孤立文档、注意力控制、版本管理、案例缺失、反例污染、依赖安装与跨平台规范等问题，支持可选的联网增强 review、触发率/行为实测，以及针对指定模型剪裁 skill 并出题考核剪裁损失。当用户要写一个 skill、改进或迭代已有 skill、问 skill 该怎么写、SKILL.md 怎么组织、description 触发不了、skill 太长要不要拆，或要求 review / 评审 / 审查某个 skill、检查 skill 质量、对 skill 目录或 SKILL.md 给出反馈意见，或要针对某个模型剪裁、精简 skill 以降低上下文占用，或提到 write skill、skill best practice、review skill、skill review、审查技能、检查技能质量 时使用。不代写整份 skill 骨架或脚手架（那是构建类工具的职责），也不用于与 skill 写法无关的通用文档写作。
+metadata:
+  version: "0.11.0"
 ---
 
 # Skill Principle
 
 Agent Skill 的最佳实践原则库，两种用法：**建设**（写新 skill 或迭代已有 skill 时，按原则边建边审）与**审查**（对已有 skill 输出分级问题清单与修改建议）。两条路径共用同一份原则：[references/principles.md](references/principles.md)。
 
-非目标：不代写整份 skill 的骨架或脚手架——建设路径给的是原则指导、结构决策与自审，具体内容仍由用户与当前会话共同写就；模型剪裁模式是从已有 skill 派生变体，不属于代写。（本 skill 版本由 git tag 管理。）
+非目标：不代写整份 skill 的骨架或脚手架——建设路径给的是原则指导、结构决策与自审，具体内容仍由用户与当前会话共同写就；模型剪裁模式是从已有 skill 派生变体，不属于代写。（本 skill 的版本同时标在 git tag 与 frontmatter 的 `metadata.version` 上。）
 
 **核心姿态：始终以「将要使用这个 skill 的 Agent」的身份阅读被建或被审的 skill** —— 假装第一次拿到它、要完全依靠它完成任务。凡是这个视角下读不懂、走不通、会误导的，都是问题。（本 skill 内这条姿态只在此处展开，别处引用。）
 
