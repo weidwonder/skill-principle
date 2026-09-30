@@ -162,7 +162,7 @@
 
 **原则**：会迭代的 skill 需要版本管理；每个版本同时标在 git tag 与 SKILL.md frontmatter 的 `metadata.version` 上，两处一致。正文不写版本号与更新日志——除非用户资产需要对齐版本。
 
-**建设**：skill 建在 git 仓库内。每次发版同时做两件事：打 git tag，并把 `metadata.version` 改成同一个版本号（tag 去掉前缀 `v`，加引号保持为字符串）。安装副本通常不带 `.git`，Agent 与随 skill 分发的脚本只能从 `metadata.version` 得知当前版本。
+**建设**：skill 建在 git 仓库内。每次发版同时做两件事：打 git tag，并把 `metadata.version` 改成同一个版本号（取 tag 的版本号部分：去掉前缀 `v`，一个仓库放多个 skill、tag 带 skill 名前缀时连前缀一起去掉；加引号保持为字符串）。安装副本通常不带 `.git`，Agent 与随 skill 分发的脚本只能从 `metadata.version` 得知当前版本。
 
 例：git tag 为 `v1.2.0` 时写
 
@@ -175,8 +175,9 @@ metadata:
 
 **审查**：
 
+- 被审对象是没有 `.git` 的安装副本时：只查 `metadata.version` 是否存在且为字符串，不做 tag 比对，也不建议 `git init`。以下两条针对源头仓库。
 - skill 目录是否为 git 仓库（或位于 git 仓库内）？版本是否以 **git tag** 标记？
-- frontmatter 是否有 `metadata.version`？它是否等于最近一个版本 tag 去掉 `v` 后的值（正在发版、tag 尚未打出时，等于即将打的 tag）？skill 根目录不在仓库顶层时，看所在仓库的 tag。
+- frontmatter 是否有 `metadata.version`？它是否等于从 HEAD 可达的最近一个版本 tag 的版本号部分？发版之后、下次发版之前的提交里，它仍等于上一个 tag；正在发版、tag 尚未打出时，等于即将打的 tag。skill 根目录不在仓库顶层时，看所在仓库的 tag。
 - 若 skill 的更新可能影响**用户资产**，是否有机制提示 Agent 检测版本差异并引导用户做资产迁移/更新？迁移引导是否引用 `metadata.version`，而不是在正文另写版本号？
 - 正文是否另外维护了版本号或更新日志？
 
